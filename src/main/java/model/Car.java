@@ -1,6 +1,8 @@
+package model;
+
 import lombok.*;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
 @Builder
@@ -11,7 +13,14 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 public class Car {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long 
+    private Long registrationNumber;
+
+    @Enumerated(value = EnumType.STRING)
+    private Brand brand;
+    private double engineCapacity;
+
 
 }
