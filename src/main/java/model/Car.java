@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import java.util.Date;
 
 @Entity
 @Builder
@@ -24,6 +25,8 @@ public class Car {
     @Enumerated(value = EnumType.STRING)
     private Brand brand;
     private double engineCapacity;
+    private int productionYear;
+    private int course;
 
 
 }
