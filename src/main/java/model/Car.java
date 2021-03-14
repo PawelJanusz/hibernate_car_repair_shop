@@ -3,6 +3,7 @@ package model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Builder
@@ -16,7 +17,9 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long registrationNumber;
+
+    @Pattern(regexp = "[A-Z]{3}[0-9]{4}")
+    private String registrationNumber;
 
     @Enumerated(value = EnumType.STRING)
     private Brand brand;
