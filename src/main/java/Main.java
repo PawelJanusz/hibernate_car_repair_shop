@@ -14,22 +14,34 @@ public class Main {
         CarDao dao = new CarDao();
 
         String command;
-        do {
-            System.out.println("Podaj komendę: add/list/delete/update/quit ");
+    do {
+            System.out.println("Podaj nr komendy: 1.Add " +
+                    "2.Delete " +
+                    "3.List " +
+                    "4.Update " +
+                    "5.FindByBrand" +
+                    "6.FindByProductionYearBetween" +
+                    "Quit ");
 
             command = scanner.nextLine();
 
-            if (command.equalsIgnoreCase("add")){
+            if (command.equals("1")){
                 addCars(dao, scanner);
             }
-            if (command.equalsIgnoreCase("delete")){
+            if (command.equals("2")){
                 deleteCar(dao, scanner);
             }
-            if (command.equalsIgnoreCase("list")){
+            if (command.equals("3")){
                 listCars(dao);
             }
-            if (command.equalsIgnoreCase("update")){
+            if (command.equals("4")){
                 updateCar(dao, scanner);
+            }
+            if (command.equals("5")){
+                findByBrand(dao, scanner);
+            }
+            if (command.equals("6")){
+                findByProductionYearBetween(dao, scanner);
             }
 
         }while (!command.equalsIgnoreCase("quit"));
@@ -95,4 +107,34 @@ public class Main {
         }else
             System.out.println("ERROR, samochód o id " + id + " nie istnieje");
     }
+
+    private static void findByBrand(CarDao dao, Scanner scanner){
+        System.out.println("Podaj nazwę marki: OPEL,\n" +
+                "    AUDI,\n" +
+                "    FIAT,\n" +
+                "    MAZDA,\n" +
+                "    NISSAN,\n" +
+                "    DODGE,\n" +
+                "    MERCEDES,\n" +
+                "    BMW");
+
+        String line = scanner.nextLine();
+
+        Brand brand = Brand.valueOf(line.toUpperCase());
+        System.out.println("Zanlezione samochody: ");
+        dao.findByBrandName(brand).forEach(System.out::println);
+    }
+
+    private static void findByProductionYearBetween(CarDao dao, Scanner scanner){
+        System.out.println("Podaj zakres lat produkcji samochodu: productionYearFrom, productionYearTo");
+
+        String line = scanner.nextLine();
+
+        int productionYearFrom = Integer.parseInt(line.split(" ")[0]);
+        int productionYearTo = Integer.parseInt(line.split(" ")[1]);
+
+        System.out.println("Znalezione samochody w podanym przedziale lat produkcji: ");
+        dao.findByProductionYearBetween(productionYearFrom, productionYearTo).forEach(System.out::println);
+    }
+
 }

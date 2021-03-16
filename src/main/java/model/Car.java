@@ -1,6 +1,7 @@
 package model;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -24,8 +25,12 @@ public class Car {
 
     @Enumerated(value = EnumType.STRING)
     private Brand brand;
+
     private double engineCapacity;
+
+    @Pattern(regexp = "[0-9]{4}")
     private int productionYear;
+
     private int course;
 
 
