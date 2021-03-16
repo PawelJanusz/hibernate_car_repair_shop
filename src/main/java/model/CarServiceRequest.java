@@ -30,8 +30,6 @@ public class CarServiceRequest {
     @UpdateTimestamp
     private LocalDateTime repaired;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Set<Car> carSet;
+    @ManyToMany
+    private Car carRef;
 }

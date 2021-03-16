@@ -34,7 +34,9 @@ public class Car {
 
     private int course;
 
-    @ManyToMany(mappedBy = "carSet")
+    @ManyToMany(mappedBy = "carRef", fetch = FetchType.EAGER)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<CarServiceRequest> carServiceRequestSet;
 
 }
