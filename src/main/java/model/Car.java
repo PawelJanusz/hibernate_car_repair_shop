@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Range;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -33,5 +34,7 @@ public class Car {
 
     private int course;
 
+    @ManyToMany(mappedBy = "carSet")
+    private Set<CarServiceRequest> carServiceRequestSet;
 
 }
