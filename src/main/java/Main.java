@@ -1,4 +1,5 @@
 import dao.CarDao;
+import dao.EntityDao;
 import model.Brand;
 import model.Car;
 
@@ -11,7 +12,6 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        CarDao dao = new CarDao();
 
         String command;
     do {
@@ -26,28 +26,30 @@ public class Main {
             command = scanner.nextLine();
 
             if (command.equals("1")){
-                addCars(dao, scanner);
+                addCars(scanner);
             }
             if (command.equals("2")){
-                deleteCar(dao, scanner);
+                deleteCar(scanner);
             }
             if (command.equals("3")){
-                listCars(dao);
+                listCars();
             }
             if (command.equals("4")){
-                updateCar(dao, scanner);
+                updateCar(scanner);
             }
             if (command.equals("5")){
-                findByBrand(dao, scanner);
+                findByBrand(scanner);
             }
             if (command.equals("6")){
-                findByProductionYearBetween(dao, scanner);
+                findByProductionYearBetween(scanner);
             }
 
         }while (!command.equalsIgnoreCase("quit"));
     }
 
-    private static void addCars(CarDao dao, Scanner scanner){
+    private static void addCars(Scanner scanner){
+        EntityDao<Car> dao = new EntityDao<>();
+
         System.out.println("Podaj dane samochodu: NUMER_REJESTRACYJNY MARKA POJEMNOSC_SILNIKA ROK_PRODUKCJI PRZEBIEG");
         String line = scanner.nextLine();
         String[] words = line.split(" ");
@@ -63,11 +65,13 @@ public class Main {
         dao.saveOrUpdate(car);
     }
 
-    private static void deleteCar(CarDao dao, Scanner scanner){
+    private static void deleteCar(Scanner scanner){
+        EntityDao<Car> dao = new EntityDao<>();
+
         System.out.println("Podaj id samochodu: ");
 
         Long id = Long.parseLong(scanner.nextLine());
-        Optional<Car> carOptional = dao.findById(id);
+        Optional<Car> carOptional = dao.findById(Car.class, id);
         if (carOptional.isPresent()){
             Car car = carOptional.get();
 
@@ -75,17 +79,21 @@ public class Main {
         }
     }
 
-    private static void listCars(CarDao dao){
+    private static void listCars(){
+        EntityDao<Car> dao = new EntityDao<>();
+
         System.out.println("Lista samochodów: ");
 
-        dao.getAll().stream().forEach(System.out::println);
+        dao.findAll(Car.class).forEach(System.out::println);
     }
 
-    private static void updateCar(CarDao dao, Scanner scanner){
+    private static void updateCar(Scanner scanner){
+        EntityDao<Car> dao = new EntityDao<>();
+
         System.out.println("Podaj id samochodu: ");
         Long id = Long.parseLong(scanner.nextLine());
 
-        Optional<Car> carOptional = dao.findById(id);
+        Optional<Car> carOptional = dao.findById(Car.class, id);
         if (carOptional.isPresent()){
             Car car = carOptional.get();
             System.out.println("Edytujesz rekord: " + car);
@@ -108,7 +116,9 @@ public class Main {
             System.out.println("ERROR, samochód o id " + id + " nie istnieje");
     }
 
-    private static void findByBrand(CarDao dao, Scanner scanner){
+    private static void findByBrand(Scanner scanner){
+        CarDao dao = new CarDao();
+
         System.out.println("Podaj nazwę marki: OPEL,\n" +
                 "    AUDI,\n" +
                 "    FIAT,\n" +
@@ -125,7 +135,9 @@ public class Main {
         dao.findByBrandName(brand).forEach(System.out::println);
     }
 
-    private static void findByProductionYearBetween(CarDao dao, Scanner scanner){
+    private static void findByProductionYearBetween(Scanner scanner){
+        CarDao dao = new CarDao();
+
         System.out.println("Podaj zakres lat produkcji samochodu: productionYearFrom, productionYearTo");
 
         String line = scanner.nextLine();

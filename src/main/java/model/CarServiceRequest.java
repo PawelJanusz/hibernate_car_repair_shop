@@ -30,6 +30,6 @@ public class CarServiceRequest {
     @UpdateTimestamp
     private LocalDateTime repaired;
 
-    @ManyToMany
-    private Car carRef;
+//    @ManyToMany
+//    private Car carRef;
 }
