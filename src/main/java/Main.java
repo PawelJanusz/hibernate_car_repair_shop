@@ -2,6 +2,7 @@ import dao.CarDao;
 import dao.EntityDao;
 import model.Brand;
 import model.Car;
+import model.CarServiceRequest;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -15,13 +16,15 @@ public class Main {
 
         String command;
     do {
-            System.out.println("Podaj nr komendy: 1.Add " +
-                    "2.Delete " +
-                    "3.List " +
-                    "4.Update " +
-                    "5.FindByBrand" +
-                    "6.FindByProductionYearBetween" +
-                    "Quit ");
+            System.out.println("Podaj nr komendy:\n" +
+                    "1.Add \n" +
+                    "2.Delete \n" +
+                    "3.List \n" +
+                    "4.Update \n" +
+                    "5.Find by brand \n" +
+                    "6.Find by production year between \n" +
+                    "7.Add car service request \n" +
+                    "Quit \n");
 
             command = scanner.nextLine();
 
@@ -42,6 +45,9 @@ public class Main {
             }
             if (command.equals("6")){
                 findByProductionYearBetween(scanner);
+            }
+            if (command.equals("7")){
+                addCarServiceRequestToCar(scanner);
             }
 
         }while (!command.equalsIgnoreCase("quit"));
@@ -147,6 +153,30 @@ public class Main {
 
         System.out.println("Znalezione samochody w podanym przedziale lat produkcji: ");
         dao.findByProductionYearBetween(productionYearFrom, productionYearTo).forEach(System.out::println);
+    }
+
+    private static void addCarServiceRequestToCar(Scanner scanner){
+        EntityDao<Car> carDao = new EntityDao<>();
+        EntityDao<CarServiceRequest> carServiceRequestDao = new EntityDao<>();
+
+        System.out.println("Podaj id samochodu");
+        Long id = Long.parseLong(scanner.nextLine());
+
+        Optional<Car> carOptional = carDao.findById(Car.class, id);
+        if (carOptional.isPresent()){
+            System.out.println("Podaj dane zlecenia: OPIS KWOTA_NAPRAWY");
+            String line = scanner.nextLine();
+            String description = line.split(" ")[0];
+            int costs = Integer.parseInt(line.split(" ")[1]);
+
+            CarServiceRequest carServiceRequest = new CarServiceRequest(description, costs);
+            carServiceRequestDao.saveOrUpdate(carServiceRequest);
+
+            Car car = carOptional.get();
+            carServiceRequest.setCarRef(car);
+
+            carServiceRequestDao.saveOrUpdate(carServiceRequest);
+        }
     }
 
 

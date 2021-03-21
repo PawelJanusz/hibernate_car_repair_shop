@@ -17,6 +17,11 @@ import java.util.Set;
 @AllArgsConstructor
 public class CarServiceRequest {
 
+    public CarServiceRequest(String description, int costs) {
+        this.description = description;
+        this.costs = costs;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,6 +35,6 @@ public class CarServiceRequest {
     @UpdateTimestamp
     private LocalDateTime repaired;
 
-//    @ManyToMany
-//    private Car carRef;
+    @ManyToOne
+    private Car carRef;
 }
