@@ -2,11 +2,10 @@ package model;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Builder
@@ -17,9 +16,10 @@ import java.util.Set;
 @AllArgsConstructor
 public class CarServiceRequest {
 
-    public CarServiceRequest(String description, int costs) {
+    public CarServiceRequest(String description, int costs, boolean repairedDone) {
         this.description = description;
         this.costs = costs;
+        this.repairedDone = repairedDone;
     }
 
     @Id
@@ -29,12 +29,15 @@ public class CarServiceRequest {
     private String description;
     private int costs;
 
+    private boolean repairedDone;
+
     @CreationTimestamp
     private LocalDateTime created;
 
-    @UpdateTimestamp
-    private LocalDateTime repaired;
+//    @UpdateTimestamp
+//    private LocalDateTime repaired;
 
     @ManyToOne
     private Car carRef;
+
 }

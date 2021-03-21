@@ -1,11 +1,10 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import dao.CarDao;
 import dao.EntityDao;
 import model.Brand;
 import model.Car;
 import model.CarServiceRequest;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -24,6 +23,9 @@ public class Main {
                     "5.Find by brand \n" +
                     "6.Find by production year between \n" +
                     "7.Add car service request \n" +
+                    "8.List car service requests \n" +
+                    "9.Delete car service request \n" +
+                    "10.Update car service request \n" +
                     "Quit \n");
 
             command = scanner.nextLine();
@@ -48,6 +50,15 @@ public class Main {
             }
             if (command.equals("7")){
                 addCarServiceRequestToCar(scanner);
+            }
+            if (command.equals("8")){
+                listCarServiceRequests(scanner);
+            }
+            if (command.equals("9")){
+                deleteCarServiceRequest(scanner);
+            }
+            if (command.equals("10")){
+                updateCarServiceRequest(scanner);
             }
 
         }while (!command.equalsIgnoreCase("quit"));
@@ -111,7 +122,7 @@ public class Main {
 
             Car car1 = Car.builder()
                     .registrationNumber(words[0])
-                    .brand(Brand.valueOf(words[1]))
+                    .brand(Brand.valueOf(words[1].toUpperCase()))
                     .engineCapacity(Double.parseDouble(words[2]))
                     .productionYear(Integer.parseInt(words[3]))
                     .course(Integer.parseInt(words[4]))
@@ -164,12 +175,14 @@ public class Main {
 
         Optional<Car> carOptional = carDao.findById(Car.class, id);
         if (carOptional.isPresent()){
-            System.out.println("Podaj dane zlecenia: OPIS KWOTA_NAPRAWY");
+            System.out.println("Podaj dane zlecenia: OPIS KWOTA_NAPRAWY CZY_ZAKOŃCZONE");
             String line = scanner.nextLine();
+
             String description = line.split(" ")[0];
             int costs = Integer.parseInt(line.split(" ")[1]);
+            boolean repaired = Boolean.parseBoolean(line.split(" ")[2]);
 
-            CarServiceRequest carServiceRequest = new CarServiceRequest(description, costs);
+            CarServiceRequest carServiceRequest = new CarServiceRequest(description, costs, repaired);
             carServiceRequestDao.saveOrUpdate(carServiceRequest);
 
             Car car = carOptional.get();
@@ -179,6 +192,60 @@ public class Main {
         }
     }
 
+    private static void listCarServiceRequests(Scanner scanner){
+        EntityDao<Car> dao = new EntityDao<>();
+
+        System.out.println("Podaj id samochodu");
+        Long id = Long.parseLong(scanner.nextLine());
+
+        Optional<Car> carOptional = dao.findById(Car.class, id);
+        if (carOptional.isPresent()){
+            Car car = carOptional.get();
+
+            car.getCarServiceRequestSet()
+                    .forEach(System.out::println);
+        }
+    }
+
+    private static void deleteCarServiceRequest(Scanner scanner){
+        EntityDao<CarServiceRequest> dao = new EntityDao<>();
+
+        System.out.println("Podaj id zlecenia");
+        Long id = Long.parseLong(scanner.nextLine());
+
+        Optional<CarServiceRequest> carServiceRequestOptional = dao.findById(CarServiceRequest.class, id);
+        if (carServiceRequestOptional.isPresent()){
+            CarServiceRequest carServiceRequest = carServiceRequestOptional.get();
+            dao.delete(carServiceRequest);
+        }
+    }
+
+    private static void updateCarServiceRequest(Scanner scanner){
+        EntityDao<CarServiceRequest> dao = new EntityDao<>();
+
+        System.out.println("Podaj id zlecenia");
+        Long id = Long.parseLong(scanner.nextLine());
+
+        Optional<CarServiceRequest> carServiceRequestOptional = dao.findById(CarServiceRequest.class, id);
+        if (carServiceRequestOptional.isPresent()){
+            CarServiceRequest carServiceRequest = carServiceRequestOptional.get();
+            System.out.println("Próbujesz edytować zlecenie: " + carServiceRequest);
+
+            System.out.println("Podaj nowe dane zlecenia: OPIS KWOTA_NAPRAWY CZY_ZAKOŃCZONE");
+            String line = scanner.nextLine();
+            String[] words = line.split(" ");
+
+            carServiceRequest = CarServiceRequest.builder()
+                    .id(id)
+                    .description(words[0])
+                    .costs(Integer.parseInt(words[1]))
+                    .repairedDone(Boolean.parseBoolean(words[2]))
+                    .build();
+            dao.saveOrUpdate(carServiceRequest);
+        }else {
+            System.err.println("Zlecenie o takim id nie istnieje");
+        }
+    }
 
 
 }
