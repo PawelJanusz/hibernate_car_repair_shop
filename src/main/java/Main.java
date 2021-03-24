@@ -1,39 +1,51 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import controller.CarController;
 import controller.CarServiceRequestController;
-import dao.CarDao;
-import dao.EntityDao;
-import model.Brand;
-import model.Car;
-import model.CarServiceRequest;
 
-import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        CarController car = new CarController();
-        CarServiceRequestController carServiceRequest = new CarServiceRequestController();
+        mainMenu();
 
-        String command;
-    do {
-            System.out.println("Podaj nr komendy:\n" +
+    }
+    private static Scanner scanner = new Scanner(System.in);
+    private static String command;
+
+    private static CarController car = new CarController();
+    private static CarServiceRequestController carServiceRequest = new CarServiceRequestController();
+
+    private static void mainMenu(){
+        do {
+            System.out.println("Choose option number: \n" +
+                    "1.Car \n" +
+                    "2.Car service request \n" +
+                    "Quit");
+            command = scanner.nextLine();
+            if (command.equals("1")){
+                carMenu();
+            }
+            if (command.equals("2")){
+                carServiceRequestMenu();
+            }
+
+        }while (!command.equalsIgnoreCase("quit"));
+    }
+
+    private static void carMenu(){
+        do {
+            System.out.println("Choose operation number for Car:\n" +
                     "1.Add \n" +
                     "2.Delete \n" +
                     "3.List \n" +
                     "4.Update \n" +
                     "5.Find by brand \n" +
                     "6.Find by production year between \n" +
-                    "7.Add car service request \n" +
-                    "8.List car service requests \n" +
-                    "9.Delete car service request \n" +
-                    "10.Update car service request \n" +
-                    "Quit \n");
+                    "Back \n" +
+                    "Quit");
 
             command = scanner.nextLine();
-
             if (command.equals("1")){
                 car.addCars(scanner);
             }
@@ -52,17 +64,38 @@ public class Main {
             if (command.equals("6")){
                 car.findByProductionYearBetween(scanner);
             }
-            if (command.equals("7")){
+            if (command.equalsIgnoreCase("back")){
+                mainMenu();
+            }
+
+        }while (!command.equalsIgnoreCase("quit"));
+    }
+
+    private static void carServiceRequestMenu(){
+        do {
+            System.out.println("Choose operation number for Car Service Request:\n" +
+                    "1.Add car service request \n" +
+                    "2.List car service requests \n" +
+                    "3.Delete car service request \n" +
+                    "4.Update car service request \n" +
+                    "Back \n" +
+                    "Quit \n");
+
+            command = scanner.nextLine();
+            if (command.equals("1")){
                 carServiceRequest.addCarServiceRequestToCar(scanner);
             }
-            if (command.equals("8")){
+            if (command.equals("2")){
                 carServiceRequest.listCarServiceRequests(scanner);
             }
-            if (command.equals("9")){
+            if (command.equals("3")){
                 carServiceRequest.deleteCarServiceRequest(scanner);
             }
-            if (command.equals("10")){
+            if (command.equals("4")){
                 carServiceRequest.updateCarServiceRequest(scanner);
+            }
+            if (command.equalsIgnoreCase("back")){
+                mainMenu();
             }
 
         }while (!command.equalsIgnoreCase("quit"));

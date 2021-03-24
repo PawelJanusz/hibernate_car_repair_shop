@@ -34,6 +34,7 @@ public class Car {
 
     private int course;
 
+    //mappedBy permit to show CarServiceRequest list in the car list
     @OneToMany(mappedBy = "carRef", fetch = FetchType.EAGER)
     private Set<CarServiceRequest> carServiceRequestSet;
 

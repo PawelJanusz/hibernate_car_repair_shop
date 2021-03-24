@@ -2,6 +2,7 @@ package model;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -28,8 +29,8 @@ public class CarServiceRequest {
     @CreationTimestamp
     private LocalDateTime created;
 
-//    @UpdateTimestamp
-//    private LocalDateTime repaired;
+    @UpdateTimestamp
+    private LocalDateTime repaired;
 
     @ManyToOne
     @EqualsAndHashCode.Exclude
