@@ -16,12 +16,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CarServiceRequest {
 
-    public CarServiceRequest(String description, int costs, boolean repairedDone) {
-        this.description = description;
-        this.costs = costs;
-        this.repairedDone = repairedDone;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,5 +33,11 @@ public class CarServiceRequest {
 
     @ManyToOne
     private Car carRef;
+
+    public CarServiceRequest(String description, int costs, boolean repairedDone) {
+        this.description = description;
+        this.costs = costs;
+        this.repairedDone = repairedDone;
+    }
 
 }
