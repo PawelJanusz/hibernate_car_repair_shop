@@ -32,6 +32,8 @@ public class CarServiceRequest {
 //    private LocalDateTime repaired;
 
     @ManyToOne
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Car carRef;
 
     public CarServiceRequest(String description, int costs, boolean repairedDone) {
