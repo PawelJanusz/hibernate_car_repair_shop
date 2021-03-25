@@ -1,5 +1,6 @@
 package controller;
 
+import dao.CarServiceRequestDao;
 import dao.EntityDao;
 import model.Car;
 import model.CarServiceRequest;
@@ -10,7 +11,7 @@ import java.util.Scanner;
 
 public class CarServiceRequestController {
 
-
+    //create
     public void addCarServiceRequestToCar(Scanner scanner){
         EntityDao<Car> carDao = new EntityDao<>();
         EntityDao<CarServiceRequest> carServiceRequestDao = new EntityDao<>();
@@ -36,7 +37,7 @@ public class CarServiceRequestController {
             carServiceRequestDao.saveOrUpdate(carServiceRequest);
         }
     }
-
+    //read
     public void listCarServiceRequests(Scanner scanner){
         EntityDao<Car> dao = new EntityDao<>();
 
@@ -51,7 +52,7 @@ public class CarServiceRequestController {
                     .forEach(System.out::println);
         }
     }
-
+    //delete
     public void deleteCarServiceRequest(Scanner scanner){
         EntityDao<CarServiceRequest> dao = new EntityDao<>();
 
@@ -65,6 +66,7 @@ public class CarServiceRequestController {
         }
     }
 
+    //update
     public void updateCarServiceRequest(Scanner scanner){
         EntityDao<CarServiceRequest> dao = new EntityDao<>();
 
@@ -92,6 +94,16 @@ public class CarServiceRequestController {
         }
     }
     public void findByCostsBetween(Scanner scanner){
+        CarServiceRequestDao dao = new CarServiceRequestDao();
 
+        System.out.println("Podaj zakres opłat za zlecenia: ");
+
+        String line = scanner.nextLine();
+
+        int costsFrom = Integer.parseInt(line.split(" ")[0]);
+        int costsTo = Integer.parseInt(line.split(" ")[1]);
+
+        System.out.println("Znalezione zlecenia w podanym przedziale kwot: ");
+        dao.findByCostsBetween(costsFrom, costsTo).forEach(System.out::println);
     }
 }

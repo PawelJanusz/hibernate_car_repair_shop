@@ -78,6 +78,7 @@ public class Main {
                     "2.List car service requests \n" +
                     "3.Delete car service request \n" +
                     "4.Update car service request \n" +
+                    "5.Find by costs between \n" +
                     "Back \n" +
                     "Quit \n");
 
@@ -93,6 +94,9 @@ public class Main {
             }
             if (command.equals("4")){
                 carServiceRequest.updateCarServiceRequest(scanner);
+            }
+            if (command.equals("5")){
+                carServiceRequest.findByCostsBetween(scanner);
             }
             if (command.equalsIgnoreCase("back")){
                 mainMenu();
