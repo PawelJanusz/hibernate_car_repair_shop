@@ -21,5 +21,6 @@ public class Mechanic {
 
     private String firstName;
     private String lastName;
+    private boolean isHired;
 
 }
