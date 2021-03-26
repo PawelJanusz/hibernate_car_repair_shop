@@ -11,6 +11,7 @@ import javax.persistence.Id;
 @Builder
 @Getter
 @Setter
+@ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class Mechanic {

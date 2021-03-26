@@ -1,6 +1,8 @@
 
 import controller.CarController;
 import controller.CarServiceRequestController;
+import controller.MechanicController;
+import model.Mechanic;
 
 import java.util.Scanner;
 
@@ -15,12 +17,14 @@ public class Main {
 
     private static CarController car = new CarController();
     private static CarServiceRequestController carServiceRequest = new CarServiceRequestController();
+    private static MechanicController mechanic = new MechanicController();
 
     private static void mainMenu(){
         do {
             System.out.println("Choose option number: \n" +
                     "1.Car \n" +
                     "2.Car service request \n" +
+                    "3.Mechanic \n" +
                     "Quit");
             command = scanner.nextLine();
             if (command.equals("1")){
@@ -28,6 +32,9 @@ public class Main {
             }
             if (command.equals("2")){
                 carServiceRequestMenu();
+            }
+            if (command.equals("3")){
+                mechanicMenu();
             }
 
         }while (!command.equalsIgnoreCase("quit"));
@@ -102,6 +109,35 @@ public class Main {
                 mainMenu();
             }
 
+        }while (!command.equalsIgnoreCase("quit"));
+    }
+
+    private static void mechanicMenu(){
+        do {
+            System.out.println("Choose operation number for mechanic: \n" +
+                    "1.Add \n" +
+                    "2.List \n" +
+                    "3.Delete \n" +
+                    "4.Update \n" +
+                    "Back \n" +
+                    "Quit");
+
+            command = scanner.nextLine();
+            if (command.equals("1")){
+                mechanic.addMechanic(scanner);
+            }
+            if (command.equals("2")){
+                mechanic.listMechanics();
+            }
+            if (command.equals("3")){
+                mechanic.deleteMechanic(scanner);
+            }
+            if (command.equals("4")){
+                mechanic.updateMechanic(scanner);
+            }
+            if (command.equalsIgnoreCase("back")){
+                mainMenu();
+            }
         }while (!command.equalsIgnoreCase("quit"));
     }
 }

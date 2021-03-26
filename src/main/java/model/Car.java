@@ -1,11 +1,9 @@
 package model;
 
 import lombok.*;
-import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
