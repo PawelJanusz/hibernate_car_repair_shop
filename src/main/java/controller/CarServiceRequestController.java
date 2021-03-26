@@ -11,15 +11,16 @@ import java.util.Scanner;
 
 public class CarServiceRequestController {
 
+    private EntityDao<Car> dao = new EntityDao<>();
+
     //create
     public void addCarServiceRequestToCar(Scanner scanner){
-        EntityDao<Car> carDao = new EntityDao<>();
         EntityDao<CarServiceRequest> carServiceRequestDao = new EntityDao<>();
 
         System.out.println("Podaj id samochodu");
         Long id = Long.parseLong(scanner.nextLine());
 
-        Optional<Car> carOptional = carDao.findById(Car.class, id);
+        Optional<Car> carOptional = dao.findById(Car.class, id);
         if (carOptional.isPresent()){
             System.out.println("Podaj dane zlecenia: OPIS KWOTA_NAPRAWY CZY_ZAKOŃCZONE");
             String line = scanner.nextLine();
@@ -39,8 +40,6 @@ public class CarServiceRequestController {
     }
     //read
     public void listCarServiceRequests(Scanner scanner){
-        EntityDao<Car> dao = new EntityDao<>();
-
         System.out.println("Podaj id samochodu");
         Long id = Long.parseLong(scanner.nextLine());
 

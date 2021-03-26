@@ -10,9 +10,10 @@ import java.util.Scanner;
 
 public class CarController {
 
-    public void addCars(Scanner scanner){
-        EntityDao<Car> dao = new EntityDao<>();
+    private EntityDao<Car> dao = new EntityDao<>();
 
+
+    public void addCars(Scanner scanner){
         System.out.println("Podaj dane samochodu: NUMER_REJESTRACYJNY MARKA POJEMNOSC_SILNIKA ROK_PRODUKCJI PRZEBIEG");
         String line = scanner.nextLine();
         String[] words = line.split(" ");
@@ -29,8 +30,6 @@ public class CarController {
     }
 
     public void deleteCar(Scanner scanner){
-        EntityDao<Car> dao = new EntityDao<>();
-
         System.out.println("Podaj id samochodu: ");
 
         Long id = Long.parseLong(scanner.nextLine());
@@ -43,16 +42,12 @@ public class CarController {
     }
 
     public void listCars(){
-        EntityDao<Car> dao = new EntityDao<>();
-
         System.out.println("Lista samochodów: ");
 
         dao.findAll(Car.class).forEach(System.out::println);
     }
 
     public void updateCar(Scanner scanner){
-        EntityDao<Car> dao = new EntityDao<>();
-
         System.out.println("Podaj id samochodu: ");
         Long id = Long.parseLong(scanner.nextLine());
 

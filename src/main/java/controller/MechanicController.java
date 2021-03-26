@@ -8,9 +8,9 @@ import java.util.Scanner;
 
 public class MechanicController {
 
-    public void addMechanic(Scanner scanner){
-        EntityDao<Mechanic> dao = new EntityDao<>();
+    private EntityDao<Mechanic> dao = new EntityDao<>();
 
+    public void addMechanic(Scanner scanner){
         System.out.println("Podaj dane mechanika: IMIE NAZWISKO CZY_PRACUJE");
         String line = scanner.nextLine();
         String[] words = line.split(" ");
@@ -24,8 +24,6 @@ public class MechanicController {
     }
 
     public void deleteMechanic(Scanner scanner){
-        EntityDao<Mechanic> dao = new EntityDao<>();
-
         System.out.println("Podaj id mechanika: ");
 
         Long id = Long.parseLong(scanner.nextLine());
@@ -38,16 +36,12 @@ public class MechanicController {
     }
 
     public void listMechanics(){
-        EntityDao<Mechanic> dao = new EntityDao<>();
-
         System.out.println("Lista mechaników: ");
 
         dao.findAll(Mechanic.class).forEach(System.out::println);
     }
 
     public void updateMechanic(Scanner scanner){
-        EntityDao<Mechanic> dao = new EntityDao<>();
-
         System.out.println("Podaj id mechanika: ");
         Long id = Long.parseLong(scanner.nextLine());
 
