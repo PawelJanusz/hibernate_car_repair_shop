@@ -2,11 +2,14 @@
 import controller.CarController;
 import controller.CarServiceRequestController;
 import controller.MechanicController;
-import model.Mechanic;
 
 import java.util.Scanner;
 
 public class Main {
+
+    //ToDo 1- relation mechanic and car
+    //ToDo 2 - new fields and @Formula in class Car
+    //ToDo 3 - TESTS
 
     public static void main(String[] args) {
         mainMenu();
