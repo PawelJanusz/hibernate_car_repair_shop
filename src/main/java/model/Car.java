@@ -36,4 +36,10 @@ public class Car {
     @OneToMany(mappedBy = "carRef", fetch = FetchType.EAGER)
     private Set<CarServiceRequest> carServiceRequestSet;
 
+    public Car(Brand brand, double engineCapacity, int productionYear, Integer course) {
+        this.brand = brand;
+        this.engineCapacity = engineCapacity;
+        this.productionYear = productionYear;
+        this.course = course;
+    }
 }
