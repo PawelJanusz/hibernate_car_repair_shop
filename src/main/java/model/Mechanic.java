@@ -33,10 +33,15 @@ public class Mechanic {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Mechanic mechanic = (Mechanic) o;
-        return isHired == mechanic.isHired && Objects.equals(id, mechanic.id) && Objects.equals(firstName, mechanic.firstName) && Objects.equals(lastName, mechanic.lastName);
+        return isHired == mechanic.isHired &&
+                Objects.equals(id, mechanic.id) &&
+                Objects.equals(firstName, mechanic.firstName) &&
+                Objects.equals(lastName, mechanic.lastName);
     }
 
     @Override
