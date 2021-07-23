@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CarServiceRequestDao {
 
-    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     public List<CarServiceRequest> findByCostsBetween(int costsFrom, int costsTo){
         List<CarServiceRequest> list = new ArrayList<>();
