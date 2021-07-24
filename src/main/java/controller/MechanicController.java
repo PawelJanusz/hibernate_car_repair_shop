@@ -1,6 +1,7 @@
 package controller;
 
 import dao.EntityDao;
+import dao.MechanicDao;
 import model.Mechanic;
 
 import java.util.Optional;
@@ -8,7 +9,7 @@ import java.util.Scanner;
 
 public class MechanicController {
 
-    private EntityDao<Mechanic> dao = new EntityDao<>();
+    private final EntityDao<Mechanic> dao = new EntityDao<>();
 
     public void addMechanic(Scanner scanner){
         System.out.println("Podaj dane mechanika: IMIE NAZWISKO CZY_PRACUJE");
@@ -63,5 +64,19 @@ public class MechanicController {
             dao.saveOrUpdate(mechanic1);
         }else
             System.out.println("Mechanik o id " + id + " nie istnieje");
+    }
+
+    public void findByMechanicLastName(Scanner scanner){
+        MechanicDao dao = new MechanicDao();
+
+        System.out.println("Podaj nazwisko szukanego mechanika: ");
+
+        String line = scanner.nextLine();
+
+        String lastName = line.split(" ")[0];
+
+        System.out.println("Znaleziono mechaników: ");
+        dao.findByMechanicLastName(lastName).forEach(System.out::println);
+
     }
 }

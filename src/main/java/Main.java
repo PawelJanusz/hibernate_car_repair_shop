@@ -15,12 +15,12 @@ public class Main {
         mainMenu();
 
     }
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
     private static String command;
 
-    private static CarController car = new CarController();
-    private static CarServiceRequestController carServiceRequest = new CarServiceRequestController();
-    private static MechanicController mechanic = new MechanicController();
+    private static final CarController car = new CarController();
+    private static final CarServiceRequestController carServiceRequest = new CarServiceRequestController();
+    private static final MechanicController mechanic = new MechanicController();
 
     private static void mainMenu(){
         do {
@@ -122,6 +122,7 @@ public class Main {
                     "2.List \n" +
                     "3.Delete \n" +
                     "4.Update \n" +
+                    "5.Find by mechanic last name \n" +
                     "Back \n" +
                     "Quit");
 
@@ -137,6 +138,9 @@ public class Main {
             }
             if (command.equals("4")){
                 mechanic.updateMechanic(scanner);
+            }
+            if (command.equals("5")){
+                mechanic.findByMechanicLastName(scanner);
             }
             if (command.equalsIgnoreCase("back")){
                 mainMenu();
