@@ -123,6 +123,8 @@ public class Main {
                     "3.Delete \n" +
                     "4.Update \n" +
                     "5.Find by mechanic last name \n" +
+                    "6.Find by mechanic first name \n" +
+                    "7.Find by mechanic first and last name \n" +
                     "Back \n" +
                     "Quit");
 
@@ -141,6 +143,12 @@ public class Main {
             }
             if (command.equals("5")){
                 mechanic.findByMechanicLastName(scanner);
+            }
+            if (command.equals("6")){
+                mechanic.findByMechanicFirstName(scanner);
+            }
+            if (command.equals("7")){
+                mechanic.findByMechanicFirstAndLastName(scanner);
             }
             if (command.equalsIgnoreCase("back")){
                 mainMenu();

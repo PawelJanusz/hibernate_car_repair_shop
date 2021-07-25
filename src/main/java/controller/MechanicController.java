@@ -77,6 +77,32 @@ public class MechanicController {
 
         System.out.println("Znaleziono mechaników: ");
         dao.findByMechanicLastName(lastName).forEach(System.out::println);
+    }
 
+    public void findByMechanicFirstName(Scanner scanner){
+        MechanicDao dao = new MechanicDao();
+
+        System.out.println("Podaj imię szukanego mechanika: ");
+
+        String line = scanner.nextLine();
+
+        String firstName = line.split(" ")[0];
+
+        System.out.println("Znaleziono mechaników: ");
+        dao.findByMechanicLastName(firstName).forEach(System.out::println);
+    }
+
+    public void findByMechanicFirstAndLastName(Scanner scanner){
+        MechanicDao dao = new MechanicDao();
+
+        System.out.println("Podaj imię i nazwisko szukanego mechanika: ");
+
+        String line = scanner.nextLine();
+
+        String firstName = line.split(" ")[0];
+        String lastName = line.split(" ")[1];
+
+        System.out.println("Znaleziono mechaników: ");
+        dao.findByMechanicFirstAndLastName(firstName, lastName).forEach(System.out::println);
     }
 }
