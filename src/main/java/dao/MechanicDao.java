@@ -35,4 +35,48 @@ public class MechanicDao {
         }
         return list;
     }
+
+    public List<Mechanic> findByMechanicFirstName(String firstName){
+        List<Mechanic> list = new ArrayList<>();
+
+        try (Session session = sessionFactory.openSession()){
+
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Mechanic> criteriaQuery = criteriaBuilder.createQuery(Mechanic.class);
+            Root<Mechanic> root = criteriaQuery.from(Mechanic.class);
+
+            criteriaQuery.select(root)
+                    .where(
+                            criteriaBuilder.equal(root.get("firstName"), firstName)
+                    );
+            list.addAll(session.createQuery(criteriaQuery).list());
+        }catch (HibernateException ex){
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+
+    public List<Mechanic> findByMechanicFirstAndLastName(String firstName, String lastName){
+        List<Mechanic> list = new ArrayList<>();
+
+        try (Session session = sessionFactory.openSession()){
+
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Mechanic> criteriaQuery = criteriaBuilder.createQuery(Mechanic.class);
+            Root<Mechanic> root = criteriaQuery.from(Mechanic.class);
+
+            criteriaQuery.select(root)
+                    .where(
+                            criteriaBuilder.equal(root.get("firstName"), firstName)
+                    )
+                    .where(
+                            criteriaBuilder.equal(root.get("lastName"), lastName)
+                    );
+            list.addAll(session.createQuery(criteriaQuery).list());
+        }catch (HibernateException ex){
+            ex.printStackTrace();
+        }
+        return list;
+    }
 }
